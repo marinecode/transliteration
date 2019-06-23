@@ -6,25 +6,25 @@ import java.util.Map;
 
 public class Transliterator {
 	private Map<Character, String> transliterationMap = new HashMap<Character, String>();
-	private String[] latinDown = {"a","b","v","g","d","e","yo","zh","z","i","j","k","l","m","n","o","p","r","s","t","u","f","x","cz","ch","sh","shh","``","у`","`","е`","yu","уа"};
+	private String[] latinDown = {"a","b","v","g","d","e","yo","zh","z","i","j","k","l","m","n","o","p","r","s","t","u","f","x","c","ch","sh","shh","``","Гі`","`","ГҐ`","yu","ГіГ "};
 	private String[] latinAll = new String[latinDown.length*2];
 	private Character[] kirill = new Character[66];
 	
-	//создаем наборы кириллических и латинских символов (заглавных и строчных)
+	//Г±Г®Г§Г¤Г ГҐГ¬ Г­Г ГЎГ®Г°Г» ГЄГЁГ°ГЁГ«Г«ГЁГ·ГҐГ±ГЄГЁГµ ГЁ Г«Г ГІГЁГ­Г±ГЄГЁГµ Г±ГЁГ¬ГўГ®Г«Г®Гў (Г§Г ГЈГ«Г ГўГ­Г»Гµ ГЁ Г±ГІГ°Г®Г·Г­Г»Гµ)
 	{
 		int letter = 1040;
 		for( int i=0; i < kirill.length; i++ ) {
-			if( i == 39 ) { //ставим ё на правильное место в алфавитном порядке
-				kirill[i] = 'ё';
+			if( i == 39 ) { //Г±ГІГ ГўГЁГ¬ Вё Г­Г  ГЇГ°Г ГўГЁГ«ГјГ­Г®ГҐ Г¬ГҐГ±ГІГ® Гў Г Г«ГґГ ГўГЁГІГ­Г®Г¬ ГЇГ®Г°ГїГ¤ГЄГҐ
+				kirill[i] = 'Вё';
 				continue;
 			}
-			if( i == 6 ) { //ставим Ё на правильное место в алфавитном порядке
-				kirill[i] = 'Ё';
+			if( i == 6 ) { //Г±ГІГ ГўГЁГ¬ ВЁ Г­Г  ГЇГ°Г ГўГЁГ«ГјГ­Г®ГҐ Г¬ГҐГ±ГІГ® Гў Г Г«ГґГ ГўГЁГІГ­Г®Г¬ ГЇГ®Г°ГїГ¤ГЄГҐ
+				kirill[i] = 'ВЁ';
 				continue;
 			}
 			kirill[i] = (char)(letter++);
 		}
-		//создаем заглавные латинские буквы и добавляем их в набор
+		//Г±Г®Г§Г¤Г ГҐГ¬ Г§Г ГЈГ«Г ГўГ­Г»ГҐ Г«Г ГІГЁГ­Г±ГЄГЁГҐ ГЎГіГЄГўГ» ГЁ Г¤Г®ГЎГ ГўГ«ГїГҐГ¬ ГЁГµ Гў Г­Г ГЎГ®Г°
 		for( int i = 0 ; i< latinDown.length; i++ ) {
 			String upper;
 			if( latinDown[i].length() == 1 ) {
@@ -35,7 +35,7 @@ public class Transliterator {
 			
 			latinAll[i] = upper;
 		}
-		//добавляем в латинский набор строчные буквы
+		//Г¤Г®ГЎГ ГўГ«ГїГҐГ¬ Гў Г«Г ГІГЁГ­Г±ГЄГЁГ© Г­Г ГЎГ®Г° Г±ГІГ°Г®Г·Г­Г»ГҐ ГЎГіГЄГўГ»
 		int j = 0;
 		for( int i = latinDown.length ; i < latinAll.length; i++ ) {
 			latinAll[i] = latinDown[j];
@@ -73,7 +73,7 @@ public class Transliterator {
 			result.append(" ");
 			result.append( wordTrans( word ));
 		}
-		result.deleteCharAt(0); // удаляем пробел перед предложением
+		result.deleteCharAt(0); // ГіГ¤Г Г«ГїГҐГ¬ ГЇГ°Г®ГЎГҐГ« ГЇГҐГ°ГҐГ¤ ГЇГ°ГҐГ¤Г«Г®Г¦ГҐГ­ГЁГҐГ¬
 		return result.toString();
 	}
 	
@@ -81,9 +81,9 @@ public class Transliterator {
 //		Transliterator t = new Transliterator();
 //		System.out.println( Arrays.toString(t.slavian));
 //		System.out.println( Arrays.toString(t.latinAll));
-//		System.out.println(t.transliterationMap.get('ъ'));
+//		System.out.println(t.transliterationMap.get('Гє'));
 //		System.out.println((char)1040);
-//		String sentens = "Привет, мир< жук жимолость!";
+//		String sentens = "ГЏГ°ГЁГўГҐГІ, Г¬ГЁГ°< Г¦ГіГЄ Г¦ГЁГ¬Г®Г«Г®Г±ГІГј!";
 //		System.out.println( t.transliterate( sentens ));
 //	}
 }
