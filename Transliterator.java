@@ -12,14 +12,14 @@ public class Transliterator {
 	
 	//ñîçäàåì íàáîðû êèðèëëè÷åñêèõ è ëàòèíñêèõ ñèìâîëîâ (çàãëàâíûõ è ñòðî÷íûõ)
 	{
-		int letter = 1040;
+		int letter = 1040;// кодировка Cp1251
 		for( int i=0; i < kirill.length; i++ ) {
 			if( i == 39 ) { //ñòàâèì ¸ íà ïðàâèëüíîå ìåñòî â àëôàâèòíîì ïîðÿäêå
-				kirill[i] = '¸';
+				kirill[i] = 'ё';
 				continue;
 			}
 			if( i == 6 ) { //ñòàâèì ¨ íà ïðàâèëüíîå ìåñòî â àëôàâèòíîì ïîðÿäêå
-				kirill[i] = '¨';
+				kirill[i] = 'Ё';
 				continue;
 			}
 			kirill[i] = (char)(letter++);
