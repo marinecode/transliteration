@@ -11,7 +11,9 @@ import java.net.Socket;
 public class SimpleServer {
 	
 	private Transliterator t = new Transliterator();
-		
+	
+	
+	//--------------------------------------------------------
 	public void startServer() {
 		try (ServerSocket serv = new ServerSocket( 666 )) 	{
 			System.out.println( "Server is waiting...");
@@ -28,6 +30,7 @@ public class SimpleServer {
 	}
 
 	
+	//--------------------------------------------------------
 	class ServerWork implements Runnable{
 		
 		private Socket client;
@@ -36,6 +39,8 @@ public class SimpleServer {
 			this.client = client;
 		}
 		
+		
+		//--------------------------------------------------------
 		public void run() {
 			try ( 
 					BufferedReader reader = new BufferedReader( new InputStreamReader( client.getInputStream() ) );
@@ -54,6 +59,8 @@ public class SimpleServer {
 		
 	}
 	
+	
+	//--------------------------------------------------------
 	public static void main(String[] args) {
 		SimpleServer server = new SimpleServer();
 		server.startServer();

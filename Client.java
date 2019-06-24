@@ -14,6 +14,8 @@ public class Client {
 	private PrintWriter writer;
 	private BufferedReader reader;
 	
+	
+	//--------------------------------------------------------
 	public void makeConnection() {
 		try {
 			socket = new Socket("localhost", 666);
@@ -25,9 +27,11 @@ public class Client {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("Server is ready for request/n" + "Waiting your input: ");
+		System.out.println("Server is ready for request" +"/n"+ "Waiting your input: ");
 	}
 
+	
+	//--------------------------------------------------------
 	private String getClientInput() {
 		Scanner scan = new Scanner( System.in );
 		String input = scan.nextLine();
@@ -35,18 +39,24 @@ public class Client {
 		return input;
 	}
 	
+	
+	//--------------------------------------------------------
 	private void makeRequest( String input ) throws IOException {
 		
 		writer.println( input );
 		writer.flush();
 	}
 	
+	
+	//--------------------------------------------------------
 	private String getRespond() throws IOException {
 		
 		String respond = reader.readLine();
 		return respond;
 	}
 	
+	
+	//--------------------------------------------------------
 	private void cleanup() {
 		writer.close();
 		try {
@@ -63,6 +73,8 @@ public class Client {
 		}
 	}
 	
+	
+	//--------------------------------------------------------
 	public static void main(String[] args) {
 		Client c = new Client();
 		c.makeConnection();
