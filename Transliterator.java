@@ -82,14 +82,4 @@ public class Transliterator {
 		result.deleteCharAt(0); 
 		return result.toString();
 	}
-	
-	public static void main(String[] arg ) {
-		Transliterator t = new Transliterator();
-		System.out.println( Arrays.toString(t.kirill));
-		System.out.println( Arrays.toString(t.latinAll));
-//		System.out.println(t.transliterationMap.get('ú'));
-//		System.out.println((char)1040);
-		String sentens = "Привет, мир! ы";
-		System.out.println( t.transliterate( sentens ));
-	}
 }
