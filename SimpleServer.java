@@ -46,17 +46,24 @@ public class SimpleServer {
 					BufferedReader reader = new BufferedReader( new InputStreamReader( client.getInputStream() ) );
 					PrintWriter writer = new PrintWriter( new OutputStreamWriter ( client.getOutputStream() ) );
 				){
+				while( !client.isClosed() ) {
+					String input  = reader.readLine();
 				
-				String input  = reader.readLine();
-				System.out.println( "From user: " + input );
-				writer.write( t.transliterate( input ) );
-				writer.flush();
+					if( input.equalsIgnoreCase( "quite" ) ) {
+						System.out.println("Client disconected");
+						return;
+					}
 				
+					System.out.println( "From user: " + input );
+					
+					writer.println( t.transliterate( input ) );
+					writer.flush();
+					
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-		
 	}
 	
 	

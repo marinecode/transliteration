@@ -4,16 +4,17 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Scanner;
+
 
 public class Client {
 	
 	private Socket socket;
 	private PrintWriter writer;
 	private BufferedReader reader;
-	
+	private BufferedReader consoleReader = new BufferedReader ( new InputStreamReader (System.in) );
 	
 	//--------------------------------------------------------
 	public void makeConnection() {
@@ -24,18 +25,20 @@ public class Client {
 			
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
+		} catch (ConnectException ex) {
+			System.out.println( "Server is down" );
+			System.exit(1);
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		System.out.println("Server is ready for request" +"/n"+ "Waiting your input: ");
+		} 
+		System.out.println("Server is ready for request. Type 'quite' for close conection." +'\n'+ "Waiting your input:");
 	}
 
 	
 	//--------------------------------------------------------
-	private String getClientInput() {
-		Scanner scan = new Scanner( System.in );
-		String input = scan.nextLine();
-		scan.close();
+	private String getClientInput() throws IOException {
+		
+		String input = consoleReader.readLine();
 		return input;
 	}
 	
@@ -58,6 +61,12 @@ public class Client {
 	
 	//--------------------------------------------------------
 	private void cleanup() {
+		try {
+			consoleReader.close();
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		writer.close();
 		try {
 			reader.close();
@@ -78,20 +87,29 @@ public class Client {
 	public static void main(String[] args) {
 		Client c = new Client();
 		c.makeConnection();
-		try {
-			String input = c.getClientInput();
-			c.makeRequest( input );
+		
+		while( true ) {
+			try {
+				String input = c.getClientInput();
+				c.makeRequest( input );
+				
+				if( input.equalsIgnoreCase("quite")) {
+					c.cleanup();
+					System.out.println("Client is gone");
+					break;
+				}
 			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			String respond = c.getRespond();
-			System.out.println("From server:" + respond );
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				String respond = c.getRespond();
+				System.out.println("From server:" + respond );
 			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		c.cleanup();
 
